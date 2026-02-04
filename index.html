@@ -1,64 +1,148 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
   <title>Study Pop</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <style>
     body {
-      font-family: "Rounded Mplus 1c", system-ui, sans-serif;
+      font-family: "Arial Rounded MT Bold", "Hiragino Maru Gothic ProN", sans-serif;
       background: linear-gradient(135deg, #ffecd2, #fcb69f);
-      margin: 0;
-      padding: 20px;
       text-align: center;
+      padding: 20px;
     }
 
     h1 {
-      color: #ff5a5f;
-      margin-bottom: 10px;
+      color: #ff6f91;
+      margin-bottom: 5px;
+    }
+
+    p {
+      color: #555;
     }
 
     .card {
       background: white;
-      border-radius: 20px;
+      border-radius: 24px;
       padding: 20px;
-      max-width: 360px;
-      margin: auto;
+      max-width: 420px;
+      margin: 20px auto;
       box-shadow: 0 10px 25px rgba(0,0,0,0.15);
     }
 
-    input, button {
-      width: 100%;
-      padding: 12px;
-      margin-top: 10px;
-      border-radius: 12px;
-      border: none;
-      font-size: 16px;
-    }
-
     input {
-      background: #f7f7f7;
+      width: 80%;
+      padding: 12px;
+      font-size: 16px;
+      border-radius: 14px;
+      border: 2px solid #ddd;
+      margin-top: 10px;
     }
 
     button {
-      background: #ff5a5f;
+      margin-top: 15px;
+      padding: 12px 26px;
+      border: none;
+      border-radius: 30px;
+      background: #ff9671;
       color: white;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 5px 12px rgba(0,0,0,0.2);
+    }
+
+    button:hover {
+      opacity: 0.85;
+    }
+
+    .graph-btn {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 12px 26px;
+      background: #845ec2;
+      color: white;
+      border-radius: 30px;
+      text-decoration: none;
       font-weight: bold;
     }
 
-    .streak {
+    .graph-btn:hover {
+      opacity: 0.85;
+    }
+
+    .msg {
       margin-top: 15px;
-      font-size: 18px;
+      font-weight: bold;
+      color: #2c73d2;
+    }
+
+    .streak {
+      margin-top: 10px;
+      font-weight: bold;
+      color: #ff8066;
     }
   </style>
 </head>
+
 <body>
   <h1>📚 Study Pop</h1>
+  <p>今日の勉強時間を記録しよう！</p>
 
   <div class="card">
-    <p>今日の勉強時間（分）</p>
-    <input type="number" id="timeInput" placeholder="例：60" />
-    <button onclick="saveTime()">記録する</button>
+    <input type="number" id="timeInput" placeholder="勉強時間（分）">
+    <br>
+    <button onclick="saveTime()">💾 記録する</button>
 
-    <div class="streak" id="streak"></div>
+    <p class="msg" id="message"></p>
+    <p class="streak" id="streak"></p>
+
+    <a href="graph.html" target="_blank" class="graph-btn">
+      📊 グラフを見る
+    </a>
   </div>
+
+  <script>
+    function saveTime() {
+      const time = document.getElementById("timeInput").value;
+      if (!time) {
+        document.getElementById("message").textContent = "⚠️ 時間を入力してね";
+        return;
+      }
+
+      const today = new Date().toISOString().slice(0, 10);
+      localStorage.setItem(today, time);
+
+      document.getElementById("message").textContent =
+        "✨ " + today + " の勉強時間を保存したよ！";
+
+      document.getElementById("timeInput").value = "";
+
+      updateStreak();
+    }
+
+    function updateStreak() {
+      let streak = 0;
+      let d = new Date();
+
+      while (true) {
+        const key = d.toISOString().slice(0, 10);
+        if (localStorage.getItem(key)) {
+          streak++;
+          d.setDate(d.getDate() - 1);
+        } else {
+          break;
+        }
+      }
+
+      if (streak > 0) {
+        document.getElementById("streak").textContent =
+          "🔥 連続 " + streak + " 日 勉強中！";
+      }
+    }
+
+    updateStreak();
+  </script>
+</body>
+</html>
