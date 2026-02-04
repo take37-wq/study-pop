@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <title>勉強時間グラフ</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- グラフ用ライブラリ -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
   <style>
@@ -22,7 +22,7 @@
 
     .card {
       background: white;
-      border-radius: 20px;
+      border-radius: 24px;
       padding: 20px;
       max-width: 500px;
       margin: auto;
@@ -35,13 +35,9 @@
       text-decoration: none;
       background: #845ec2;
       color: white;
-      padding: 10px 20px;
+      padding: 12px 24px;
       border-radius: 30px;
       font-weight: bold;
-    }
-
-    a:hover {
-      opacity: 0.85;
     }
   </style>
 </head>
@@ -55,9 +51,21 @@
   </div>
 
   <script>
-    // 仮データ（あとで本物に差し替える）
-    const labels = ["月", "火", "水", "木", "金"];
-    const data = [60, 90, 30, 120, 80];
+    // localStorage から勉強データを全部取得
+    const labels = [];
+    const data = [];
+
+    Object.keys(localStorage)
+      .filter(key => /^\d{4}-\d{2}-\d{2}$/.test(key)) // 日付だけ取得
+      .sort() // 日付順に並べる
+      .forEach(key => {
+        labels.push(key);
+        data.push(Number(localStorage.getItem(key)));
+      });
+
+    if (labels.length === 0) {
+      alert("まだ勉強データがないよ！");
+    }
 
     new Chart(document.getElementById("studyChart"), {
       type: "bar",
