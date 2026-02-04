@@ -1,11 +1,64 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Study Pop</title>
+  <style>
+    body {
+      font-family: "Rounded Mplus 1c", system-ui, sans-serif;
+      background: linear-gradient(135deg, #ffecd2, #fcb69f);
+      margin: 0;
+      padding: 20px;
+      text-align: center;
+    }
+
+    h1 {
+      color: #ff5a5f;
+      margin-bottom: 10px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 20px;
+      padding: 20px;
+      max-width: 360px;
+      margin: auto;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    }
+
+    input, button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 10px;
+      border-radius: 12px;
+      border: none;
+      font-size: 16px;
+    }
+
+    input {
+      background: #f7f7f7;
+    }
+
+    button {
+      background: #ff5a5f;
+      color: white;
+      font-weight: bold;
+    }
+
+    .streak {
+      margin-top: 15px;
+      font-size: 18px;
+    }
+  </style>
 </head>
 <body>
-  <h1>🎉 表示できた！</h1>
-  <p>GitHub Pages 成功！</p>
-</body>
-</html>
+  <h1>📚 Study Pop</h1>
+
+  <div class="card">
+    <p>今日の勉強時間（分）</p>
+    <input type="number" id="timeInput" placeholder="例：60" />
+    <button onclick="saveTime()">記録する</button>
+
+    <div class="streak" id="streak"></div>
+  </div
