@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>勉強時間グラフ</title>
+
+  <!-- グラフ用ライブラリ -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <style>
+    body {
+      font-family: "Arial Rounded MT Bold", "Hiragino Maru Gothic ProN", sans-serif;
+      background: linear-gradient(135deg, #fff3b0, #ffcad4);
+      text-align: center;
+      padding: 20px;
+    }
+
+    h1 {
+      color: #ff6f91;
+      margin-bottom: 20px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 20px;
+      padding: 20px;
+      max-width: 500px;
+      margin: auto;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    }
+
+    a {
+      display: inline-block;
+      margin-top: 20px;
+      text-decoration: none;
+      background: #845ec2;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 30px;
+      font-weight: bold;
+    }
+
+    a:hover {
+      opacity: 0.85;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>📊 勉強時間グラフ</h1>
+
+  <div class="card">
+    <canvas id="studyChart"></canvas>
+    <a href="index.html">🏠 ホームに戻る</a>
+  </div>
+
+  <script>
+    // 仮データ（あとで本物に差し替える）
+    const labels = ["月", "火", "水", "木", "金"];
+    const data = [60, 90, 30, 120, 80];
+
+    new Chart(document.getElementById("studyChart"), {
+      type: "bar",
+      data: {
+        labels: labels,
+        datasets: [{
+          label: "勉強時間（分）",
+          data: data,
+          backgroundColor: "#ff9671"
+        }]
+      },
+      options: {
+        borderRadius: 10,
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+  </script>
+</body>
+</html>
